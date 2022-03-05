@@ -42,6 +42,7 @@ if __name__ == "__main__":
                 "type": "service_account",
                 "project_id": os.environ["project_id"],
                 "private_key": os.environ["private_key"],
+                "private_key": os.environ.get('private_key').replace('\\n', '\n'),
                 "client_email": os.environ["client_email"],
                 "token_uri": "https://oauth2.googleapis.com/token",
             }), 
