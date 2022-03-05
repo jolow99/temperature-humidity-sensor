@@ -39,6 +39,7 @@ if __name__ == "__main__":
         # For PROD
         default_app = firebase_admin.initialize_app(
             credentials.Certificate({
+                "type": "service_account",
                 "project_id": os.environ["project_id"],
                 "private_key": os.environ["private_key"],
                 "client_email": os.environ["client_email"],
