@@ -3,11 +3,7 @@ import time
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
-
-#define DATABASE_URL 
-#define DATABASE_SECRET "mjCNlPnXayKIL7sRLHnxMgI2de1ZRj6hd3ZVZ107"
-
-
+import os
 
 def main():
     ref = db.reference("/")
@@ -32,10 +28,25 @@ def main():
     # st.write(cur)
 
 if __name__ == "__main__":
+   
     if not firebase_admin._apps:
-        cred = credentials.Certificate('cred.json')
-        default_app = firebase_admin.initialize_app(cred, {
-            'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        })
+        #  # For LOCAL
+        # cred = credentials.Certificate('cred.json')
+        # default_app = firebase_admin.initialize_app(cred, {
+        #     'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
+        # })
+
+        # For PROD
+        default_app = firebase_admin.initialise_app(
+            credentials.Certificate({
+                "project_id": os.environ["project_id"],
+                "private_key": os.environ["private_key"],
+                "client_email": os.environ["client_email"],
+            }), 
+            {
+                'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
+            })
+    
+
     main()
 
