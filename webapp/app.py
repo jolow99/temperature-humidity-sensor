@@ -53,25 +53,25 @@ def main():
 if __name__ == "__main__":
    
     if not firebase_admin._apps:
-         # For LOCAL
-        cred = credentials.Certificate('cred.json')
-        default_app = firebase_admin.initialize_app(cred, {
-            'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        })
+        #  # For LOCAL
+        # cred = credentials.Certificate('cred.json')
+        # default_app = firebase_admin.initialize_app(cred, {
+        #     'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
+        # })
 
-        # # For PROD
-        # default_app = firebase_admin.initialize_app(
-        #     credentials.Certificate({
-        #         "type": "service_account",
-        #         "project_id": os.environ["project_id"],
-        #         "private_key": os.environ["private_key"],
-        #         "private_key": os.environ.get('private_key').replace('\\n', '\n'),
-        #         "client_email": os.environ["client_email"],
-        #         "token_uri": "https://oauth2.googleapis.com/token",
-        #     }), 
-        #     {
-        #         'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
-        #     })
+        # For PROD
+        default_app = firebase_admin.initialize_app(
+            credentials.Certificate({
+                "type": "service_account",
+                "project_id": os.environ["project_id"],
+                "private_key": os.environ["private_key"],
+                "private_key": os.environ.get('private_key').replace('\\n', '\n'),
+                "client_email": os.environ["client_email"],
+                "token_uri": "https://oauth2.googleapis.com/token",
+            }), 
+            {
+                'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
+            })
     
 
     main()
