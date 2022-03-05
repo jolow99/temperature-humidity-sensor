@@ -1,6 +1,9 @@
 platformio/.pio
+platformio/.vscode
 platformio/.vscode/.browse.c_cpp.db*
 platformio/.vscode/c_cpp_properties.json
 platformio/.vscode/launch.json
 platformio/.vscode/ipch
 platformio/include/secrets.h
+
+webapp/venv
