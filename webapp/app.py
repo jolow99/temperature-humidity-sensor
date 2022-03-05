@@ -43,6 +43,7 @@ if __name__ == "__main__":
                 "project_id": os.environ["project_id"],
                 "private_key": os.environ["private_key"],
                 "client_email": os.environ["client_email"],
+                "token_uri": "https://oauth2.googleapis.com/token",
             }), 
             {
                 'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
