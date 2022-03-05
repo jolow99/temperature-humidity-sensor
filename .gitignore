@@ -7,3 +7,4 @@ platformio/.vscode/ipch
 platformio/include/secrets.h
 
 webapp/venv
+webapp/cred.json
