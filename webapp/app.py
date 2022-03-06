@@ -35,7 +35,7 @@ def main():
         new_cur = new_data[new_cur_time]
         new_temperature = new_cur["Temperature"]
         new_humidity = new_cur["Humidity"]
-        datetime_snapshot.text(f"Last Updated Time:  {datetime.fromtimestamp(int(new_cur_time))}")
+        datetime_snapshot.text(f"Last Updated Time:  {datetime.fromtimestamp(int(new_cur_time) + timedelta(seconds=8*60*60).total_seconds() )}")
         col1.metric(label="Power", value=new_power)
         col2.metric(label="Temperature", value = f"{new_temperature} °C" )
         col3.metric(label="Humidity", value = f"{new_humidity} % ")
@@ -47,7 +47,7 @@ def main():
         new_cur = new_data[new_cur_time]
         new_temperature = new_cur["Temperature"]
         new_humidity = new_cur["Humidity"]
-        datetime_snapshot.text(f"Last Updated Time:  {datetime.fromtimestamp(int(new_cur_time))}")
+        datetime_snapshot.text(f"Last Updated Time:  {datetime.fromtimestamp(int(new_cur_time) + timedelta(seconds=8*60*60).total_seconds() )}")
         col1.metric(label="Power", value=new_power)
         col2.metric(label="Temperature", value = f"{new_temperature} °C" )
         col3.metric(label="Humidity", value = f"{new_humidity} % ")
