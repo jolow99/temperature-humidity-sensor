@@ -107,7 +107,7 @@ void setup()
 
 void loop() 
 {
-  delay(3000);
+  delay(30000);
   
   // Get Power value
   Firebase.getString(fbdo, "/power");
