@@ -68,7 +68,7 @@ if __name__ == "__main__":
         #     'databaseURL':"https://temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app" 
         # })
 
-        For PROD
+        # For PROD
         default_app = firebase_admin.initialize_app(
             credentials.Certificate({
                 "type": "service_account",
