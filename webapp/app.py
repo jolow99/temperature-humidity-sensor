@@ -56,15 +56,15 @@ def main():
         df = pd.DataFrame.from_dict(data, orient='index')
         # df.index.name = "Time"
         df = df.reset_index()
-        df["index"] = df["index"].apply(lambda x: datetime.fromtimestamp(int(x)))
+        df["index"] = df["index"].apply(lambda x: datetime.fromtimestamp(int(x) + timedelta(seconds=24*60*60).total_seconds()))
         df["Temperature"] = df["Temperature"].apply(lambda x: float(x))
         df["Humidity"] = df["Humidity"].apply(lambda x: float(x))
         df = df.set_index('index')
         df.plot()
         plt.show()
-        st.dataframe(data=df)
         st.line_chart(data=df["Humidity"])
         st.line_chart(data=df["Temperature"])
+        st.dataframe(data=df)
 
 if __name__ == "__main__":
    
