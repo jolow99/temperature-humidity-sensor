@@ -5,7 +5,8 @@ from firebase_admin import credentials
 from firebase_admin import db
 import os
 import pandas as pd 
-from datetime import datetime
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt 
 
 def main():
     ref = db.reference("/")
@@ -13,22 +14,15 @@ def main():
     data, power = all["data"], all["power"]
     cur_time = list(data)[-1]
     cur = data[cur_time]
-    print(cur)
     temperature = cur["Temperature"]
     humidity = cur["Humidity"]
 
     cur_datetime = datetime.fromtimestamp(int(cur_time))
-    st.text(cur_datetime)
-    
-
+    datetime_snapshot = st.empty()
     power_snapshot = st.empty()
     data_snapshot = st.empty()
     col1, col2, col3 = st.empty(), st.empty(), st.empty()
     col1, col2, col3 = st.columns(3)
-    # col1.metric(label="Power", value=power)
-    # col2.metric(label="Temperature", value = f"{temperature} °C" )
-    # col3.metric(label="Humidity", value = f"{humidity} % ")
-
     if st.button("Toggle On or Off"): 
         print(f"{power=}")
         if power == "1": 
@@ -36,15 +30,25 @@ def main():
         elif power =="0": 
             ref.update({"power": "1"})
         new_power = ref.get()["power"]
-        col1.metric(f"Database State: {new_power}")
+        new_data = ref.get()["data"] 
+        new_cur_time = list(new_data)[-1]
+        new_cur = new_data[new_cur_time]
+        new_temperature = new_cur["Temperature"]
+        new_humidity = new_cur["Humidity"]
+        datetime_snapshot.text(f"Last Updated Time:  {datetime.fromtimestamp(int(new_cur_time))}")
+        col1.metric(label="Power", value=new_power)
+        col2.metric(label="Temperature", value = f"{new_temperature} °C" )
+        col3.metric(label="Humidity", value = f"{new_humidity} % ")
 
     if st.button("Update"):
         new_power =ref.get()["power"]
         new_data = ref.get()["data"] 
-        new_cur = new_data[list(new_data)[-1]]
-        col1.metric(label="Power", value=new_power)
+        new_cur_time = list(new_data)[-1]
+        new_cur = new_data[new_cur_time]
         new_temperature = new_cur["Temperature"]
         new_humidity = new_cur["Humidity"]
+        datetime_snapshot.text(f"Last Updated Time:  {datetime.fromtimestamp(int(new_cur_time))}")
+        col1.metric(label="Power", value=new_power)
         col2.metric(label="Temperature", value = f"{new_temperature} °C" )
         col3.metric(label="Humidity", value = f"{new_humidity} % ")
 
@@ -52,9 +56,12 @@ def main():
         df = pd.DataFrame.from_dict(data, orient='index')
         # df.index.name = "Time"
         df = df.reset_index()
-        print(df.keys())
         df["index"] = df["index"].apply(lambda x: datetime.fromtimestamp(int(x)))
+        df["Temperature"] = df["Temperature"].apply(lambda x: float(x))
+        df["Humidity"] = df["Humidity"].apply(lambda x: float(x))
         df = df.set_index('index')
+        df.plot()
+        plt.show()
         st.dataframe(data=df)
         st.line_chart(data=df["Humidity"])
         st.line_chart(data=df["Temperature"])
