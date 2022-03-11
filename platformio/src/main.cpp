@@ -76,7 +76,10 @@ void setup()
 {
   // Serial Setup and wait for serial
   Serial.begin(9600);
-  while (!Serial); // Waits for serial 
+  // while (!Serial); // Waits for serial for debugging purposes. Cannot be used in PROD
+
+  // Initialise Relay
+  pinMode(6, OUTPUT);
 
   // Initialise sensors
   dht.begin();
@@ -93,7 +96,8 @@ void setup()
   // WiFi setup
   int status = WL_IDLE_STATUS;
   while (status != WL_CONNECTED) {
-    Serial.println("Connecting to Wi-Fi");
+    Serial.print("Connecting to Wi-Fi: ");
+    Serial.println(WIFI_SSID);
     status = WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     delay(10000);
   }
@@ -107,7 +111,7 @@ void setup()
 
 void loop() 
 {
-  delay(30000);
+  delay(10000);
   
   // Get Power value
   Firebase.getString(fbdo, "/power");
@@ -147,6 +151,15 @@ void loop()
       humidity_value = String(event.relative_humidity);
       Firebase.setString(fbdo, data + "/" + String(timestamp) + "/Humidity", humidity_value);
     }
+
+    // Turn on humidifier if humidity < 50%
+    if (event.relative_humidity < 50) {
+      digitalWrite(6, HIGH);
+    }
+    else {
+      digitalWrite(6, LOW);
+    }
+
   } else {
     Serial.println("Power Value is off");
   }
