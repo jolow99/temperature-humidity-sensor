@@ -5,9 +5,8 @@
 #include "Firebase_Arduino_WiFiNINA.h"
 #include "secrets.h"
 
-#define DATABASE_URL "temp-humidity-sensor-747b7-default-rtdb.asia-southeast1.firebasedatabase.app"  //<databaseName>.firebaseio.com or <databaseName>.<region>.firebasedatabase.app
-#define DATABASE_SECRET "mjCNlPnXayKIL7sRLHnxMgI2de1ZRj6hd3ZVZ107"
-
+char DATABASE_URL[] = SECRET_DATABASE_URL;
+char DATABASE_SECRET[] = SECRET_DATABASE_SECRET;
 char WIFI_SSID[] = SECRET_SSID;        
 char WIFI_PASSWORD[] = SECRET_PASS;   
 
