@@ -10,12 +10,20 @@ char DATABASE_SECRET[] = SECRET_DATABASE_SECRET;
 char WIFI_SSID[] = SECRET_SSID;        
 char WIFI_PASSWORD[] = SECRET_PASS;   
 
+#define RELAYPIN 6 // Pin to control the relay
 #define DHTPIN 2     // Digital pin connected to the DHT sensor 
 #define DHTTYPE DHT11     // DHT 11
 
-//Define firebase and dht objects
+// Define firebase and dht objects
 FirebaseData fbdo;
 DHT_Unified dht(DHTPIN, DHTTYPE);
+
+// Initialise values and define firebase path
+String data = "/data";
+String power_value = "0";
+String temperature_value = "0.00";
+String humidity_value = "0.00";
+int timestamp;
 
 void printWifi() {
   Serial.println("----------------------------------------");
@@ -65,12 +73,6 @@ void printHumidity(sensor_t sensor) {
   Serial.println(F("------------------------------------"));
 }
 
-String data = "/data";
-String power_value = "0";
-String temperature_value = "0.00";
-String humidity_value = "0.00";
-int timestamp;
-
 void setup()
 {
   // Serial Setup and wait for serial
@@ -78,7 +80,7 @@ void setup()
   // while (!Serial); // Waits for serial for debugging purposes. Cannot be used in PROD
 
   // Initialise Relay
-  pinMode(6, OUTPUT);
+  pinMode(RELAYPIN, OUTPUT);
 
   // Initialise sensors
   dht.begin();
@@ -161,5 +163,6 @@ void loop()
 
   } else {
     Serial.println("Power Value is off");
+    digitalWrite(6, LOW);
   }
 }

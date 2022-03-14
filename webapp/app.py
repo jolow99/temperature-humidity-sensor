@@ -23,6 +23,7 @@ def main():
     data_snapshot = st.empty()
     col1, col2, col3 = st.empty(), st.empty(), st.empty()
     col1, col2, col3 = st.columns(3)
+    
     if st.button("Toggle On or Off"): 
         print(f"{power=}")
         if power == "1": 
